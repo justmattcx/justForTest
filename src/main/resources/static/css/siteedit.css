@@ -1,0 +1,21 @@
+
+body {
+  padding-top: 90px;
+}
+
+.common-container {
+	padding: 40px 15px;
+	text-align: center;
+}
+
+.sitelist-container {
+	padding: 40px 15px;
+}
+
+
+/*
+.mybtn{float:left;padding:15px;display:inline-block;}
+
+.mycontainer{display:flex;align-items:center;}
+
+*/

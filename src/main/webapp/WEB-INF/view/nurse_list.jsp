@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,41 +7,49 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>新增站點</title>	
+<title>護士列表</title>	
 	
 <link href="../vendor/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- Custom styles for this template -->
-<link href="../css/sitenew.css" rel="stylesheet">
+<link href="../css/nurselist.css" rel="stylesheet">
 
 </head>
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-header" >		
+	<div class="navbar-header" >
 		<a href="../main" class="btn navbar-btn pull-left" role="button">
 			<span class="glyphicon glyphicon-chevron-left"></span>
-		</a>	
-		<a href="#" class="navbar-brand" >新增站點</a>
+		</a>
+		<a href="#" class="navbar-brand" >護士列表</a>
 	</div>
 </nav>
 
 <!-- start: container -->
-<div class="container"><div class="commom-container">
-
-	<form action="./doAdd" method="post" class="form-horizontal" >
-		<div class="form-group">
-			<label for="inputSiteName" class="col-sm-4 control-label">站點名稱</label>
-			<div class="col-sm-6">
-				<input type=text class="form-control" id="siteName" name="siteName" placeholder="請輸入站點名稱">
-			</div> 
-		</div>
-		<div class="form-group">
-			<div class="col-sm-offset-4 col-sm-10">
-      			<button type="submit" class="btn btn-default">確定新增</button>
-    		</div>
-  		</div>
-	</form>
-
+<div class="container">
+<div class="sitelist-container">
+<table class="table table-hover">
+<thead><tr>
+	<th>站點</th>
+	<th>修改時間</th>
+	<th>動作</th>
+</tr></thead>
+	
+<tbody>
+	
+ 	<c:forEach var="nurse" items="${nurseList}">
+		<tr class="text-info">
+			<td>${nurse.nurseNo} </td>
+			<td>${nurse.updDate}</td>
+			<td>
+				<a href="../site/edit/${nurse.nurseId}">View</a> / 
+				<a href="../site/doDel/${nurse.nurseId}">Del</a>
+			</td>
+		</tr>
+	</c:forEach>	
+		
+</tbody>
+</table>
 </div></div>
 <!-- end: container -->
    
