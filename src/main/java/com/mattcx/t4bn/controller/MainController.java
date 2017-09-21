@@ -14,17 +14,9 @@ public class MainController {
 
     @RequestMapping("")
     public ModelAndView index(){
-    	List<List<String>> learnList =new ArrayList<List<String>>();
-    	
-    	List<String> bean1 = new ArrayList<String>();
-        learnList.add(bean1);
-
-    	List<String> bean2 = new ArrayList<String>();
-           learnList.add(bean2);       
+    
+        ModelAndView modelAndView = new ModelAndView("/main2");
         
-        
-        ModelAndView modelAndView = new ModelAndView("/index");
-        modelAndView.addObject("learnList", learnList);
         return modelAndView;
     }
 	
