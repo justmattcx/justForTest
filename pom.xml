@@ -25,6 +25,32 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
-	</dependencies>
+		<!-- 
+			compile: 
+				编译依赖范围。如果没有指定，就会默认使用该依赖范围。
+				使用此依赖范围的Maven依赖，对于编译、测试、运行三种classpath都有效。
+				典型的例子是spring-code,在编译、测试和运行的时候都需要使用该依赖。
+			test: 
+				测试依赖范围。使用次依赖范围的Maven依赖，只对于测试classpath有效，
+				在编译主代码或者运行项目的使用时将无法使用此依赖。典型的例子是Jnuit,它只有在编译测试代码及运行测试的时候才需要。
+			provided:
+				已提供依赖范围。使用此依赖范围的Maven依赖，对于编译和测试classpath有效，
+				但在运行时候无效。典型的例子是servlet-api,编译和测试项目的时候需要该依赖，
+				但在运行项目的时候，由于容器以及提供，就不需要Maven重复地引入一遍。			
+		 -->
+		
+		<dependency>
+    		<groupId>javax.servlet</groupId>
+    		<artifactId>jstl</artifactId>
+		</dependency>		
+		
+		<dependency>
+    		<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>		
+				
+		 
+	</dependencies>  
   
 </project>
