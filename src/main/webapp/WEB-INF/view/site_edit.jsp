@@ -18,7 +18,7 @@
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header" >			
-		<a href="../../main" class="btn navbar-btn pull-left" role="button">
+		<a href="../../site" class="btn navbar-btn pull-left" role="button">
 			<span class="glyphicon glyphicon-chevron-left"></span>
 		</a>
 		<a href="#" class="navbar-brand" >修改站點資料</a>

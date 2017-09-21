@@ -42,8 +42,8 @@
 			<td>${nurse.nurseNo} </td>
 			<td>${nurse.updDate}</td>
 			<td>
-				<a href="../site/edit/${nurse.nurseId}">View</a> / 
-				<a href="../site/doDel/${nurse.nurseId}">Del</a>
+				<a href="../nurse/edit/${nurse.nurseId}">View</a> / 
+				<a href="../nurse/doDel/${nurse.nurseId}">Del</a>
 			</td>
 		</tr>
 	</c:forEach>	

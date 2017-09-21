@@ -9,16 +9,16 @@
 
 <title>修改護士資料</title>	
 	
-<link href="../vendor/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="../../vendor/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- Custom styles for this template -->
-<link href="../css/nurseedit.css" rel="stylesheet">
+<link href="../../css/nurseedit.css" rel="stylesheet">
 
 </head>
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header" >
-		<a href="../main" class="btn navbar-btn pull-left" role="button">
+		<a href="../../nurse" class="btn navbar-btn pull-left" role="button">
 			<span class="glyphicon glyphicon-chevron-left"></span>
 		</a>	
 		<a href="#" class="navbar-brand" >修改護士資料</a>
@@ -28,9 +28,8 @@
 
 <!-- start: container -->
 <div class="container"><div class="common-container">
-	<input type=hidden id="nurseId" name="nurseId" value="${nurseId}" >
 	<form action="../doEdit" method="post" class="form-horizontal">
-		
+		<input type=hidden id="nurseId" name="nurseId" value="${nurseId}" >
 		<div class="form-group">
 			<label for="inputNurseNo" class="col-sm-4 control-label">員工編號</label>
 			<div class="col-sm-6">
@@ -56,7 +55,7 @@
 </div></div>
 <!-- end: container -->
    
-<script src="../vendor/jquery-3.2.1/jquery-3.2.1.js"></script>
-<script src="../vendor/bootstrap-3.3.7/js/bootstrap.js"></script>
+<script src="../../vendor/jquery-3.2.1/jquery-3.2.1.js"></script>
+<script src="../../vendor/bootstrap-3.3.7/js/bootstrap.js"></script>
 </body>
 </html>
