@@ -25,7 +25,6 @@
 	</div>
 </nav>
 
-
 <!-- start: container -->
 <div class="container">
 <div class="sitelist-container">
@@ -41,7 +40,7 @@
  	<c:forEach var="site" items="${siteList}">
 		<tr class="text-info">
 			<td>${site.siteName} </td>
-			<td>${site.updDate}</td>
+			<td>${site.updDatetime}</td>
 			<td>
 				<a href="../site/edit/${site.siteId}">View</a> / 
 				<a href="../site/doDel/${site.siteId}">Del</a>

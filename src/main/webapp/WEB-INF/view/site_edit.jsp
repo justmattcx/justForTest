@@ -34,7 +34,7 @@
 			<label for="inputSiteName" class="col-sm-4 control-label">站點名稱</label>
 			<div class="col-sm-6">
 				<input type=text class="form-control" 
-					id="siteName" name="siteName" placeholder="請輸入站點名稱">
+					id="siteName" name="siteName" placeholder="請輸入站點名稱" value="${site.siteName}">
 			</div> 
 		</div>
   

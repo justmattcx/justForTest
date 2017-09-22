@@ -33,14 +33,14 @@
 		<div class="form-group">
 			<label for="inputNurseNo" class="col-sm-4 control-label">員工編號</label>
 			<div class="col-sm-6">
-				<input type=text class="form-control" 
+				<input type=text class="form-control" value="${nurse.nurseNo}"
 					id="nurseNo" name="nurseNo" placeholder="請輸入員工編號">
 			</div> 
 		</div>
  		<div class="form-group">
 			<label for="inputNurseName" class="col-sm-4 control-label">護士姓名</label>
 			<div class="col-sm-6">
-				<input type=text class="form-control" 
+				<input type=text class="form-control" value="${nurse.nurseName}"
 					id="nurseName" name="nurseName" placeholder="請輸入護士姓名">
 			</div> 
 		</div>

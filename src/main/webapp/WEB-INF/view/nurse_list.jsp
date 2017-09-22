@@ -30,7 +30,7 @@
 <div class="sitelist-container">
 <table class="table table-hover">
 <thead><tr>
-	<th>站點</th>
+	<th>員編</th>
 	<th>修改時間</th>
 	<th>動作</th>
 </tr></thead>

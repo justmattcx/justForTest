@@ -1,9 +1,6 @@
 package com.mattcx.t4bn.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mattcx.t4bn.dao.NurseDao;
 import com.mattcx.t4bn.model.Nurse;
+import com.mattcx.t4bn.model.Site;
 
 @RestController
 @RequestMapping("/nurse")
 public class NurseController {
+	
+    @Autowired
+    private NurseDao nurseDao;	
 	
 	
     /** 
@@ -34,7 +35,6 @@ public class NurseController {
     	System.out.println("run: nueseAddPage");
         
         ModelAndView modelAndView = new ModelAndView("/nurse_new");
-        //modelAndView.addObject("learnList", learnList);    
         return modelAndView;
     }		
 	
@@ -77,24 +77,7 @@ public class NurseController {
     	System.out.println("run: nurseListPage");
     	
     	List<Nurse> nurseList = (List<Nurse>)nurseDao.findAll();
-    	
-    	
-//        List<Map<String, Object>> nurseList = new ArrayList<Map<String, Object>>();
-        
-//        Map<String, Object> nurseMap1 = new HashMap<String, Object>();
-//        nurseMap1.put("nurseId", "1");
-//        nurseMap1.put("nurseNo", "B0001");
-//        nurseMap1.put("nurseName", "李OO");
-//        nurseMap1.put("updDate", "2017/09/21 10:55:20");
-//        nurseList.add(nurseMap1);
-//        
-//        Map<String, Object> nurseMap2 = new HashMap<String, Object>();
-//        nurseMap2.put("nurseId", "27");
-//        nurseMap2.put("nurseNo", "B0001");
-//        nurseMap2.put("nurseName", "吳XX");
-//        nurseMap2.put("updDate", "2017/09/21 10:55:20");        
-//        nurseList.add(nurseMap2);
-        
+    	   
         ModelAndView modelAndView = new ModelAndView("/nurse_list");
         modelAndView.addObject("nurseList", nurseList);
         
@@ -112,8 +95,11 @@ public class NurseController {
     	System.out.println("run: nurseUpdPage");
     	System.out.println("nurseId>>>"+nurseId);
         
+    	Nurse nurse = nurseDao.findOne(new Long(nurseId));
+    	
         ModelAndView modelAndView = new ModelAndView("/nurse_edit");
         modelAndView.addObject("nurseId", nurseId);
+        modelAndView.addObject("nurse", nurse);
         
         return modelAndView;
     }	    
@@ -136,6 +122,13 @@ public class NurseController {
     	System.out.println("doEdit: nurseNo>>>"+nurseNo);
     	System.out.println("doEdit: nurseName>>>"+nurseName);   
     	
+    	Nurse nurse = new Nurse();
+    	nurse.setNurseId(new Long(nurseId));
+    	nurse.setNurseNo(nurseNo);
+    	nurse.setNurseName(nurseName);
+    	//nurse.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
+    	nurseDao.save(nurse);
+    	
         return new ModelAndView("redirect:/nurse");
     } 
     
@@ -150,14 +143,9 @@ public class NurseController {
     	System.out.println("run: doDel");
     	System.out.println("doDel: nurseId>>>"+nurseId);
     	
+    	nurseDao.delete(new Long(nurseId));
+    	
         return new ModelAndView("redirect:/nurse");
     }  	
     
-    
-    
-    
-    @Autowired
-    private NurseDao nurseDao;
-    
-	
 }

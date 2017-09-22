@@ -1,11 +1,7 @@
 package com.mattcx.t4bn.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,18 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mattcx.t4bn.dao.SiteInfoDao;
+import com.mattcx.t4bn.dao.SiteDao;
+import com.mattcx.t4bn.model.Site;
 
 @RestController
 @RequestMapping("/site")
 public class SiteController {
 
-
+    @Autowired
+    private SiteDao siteDao;
 	
-//	  @Autowired
-//	  private SiteInfoDao siteInfoDao;
-	
-
 	/** 
      * 頁面-新增站點頁
      * --
@@ -39,7 +33,6 @@ public class SiteController {
     	System.out.println("run: siteAddPage");
     	
         ModelAndView modelAndView = new ModelAndView("/site_new");
-        
         return modelAndView;
     }		
 	
@@ -56,6 +49,18 @@ public class SiteController {
     	String siteName = req.getParameter("siteName");
     	System.out.println("doAdd: siteName>>>"+siteName);
     	
+    	Site site = new Site();
+    	site.setSiteName(siteName);
+    	//site.setCrtDatetime(new Timestamp(System.currentTimeMillis()));
+    	//site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));
+    	
+    	try {
+    		siteDao.save(site);
+    		
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}    	
+    	
         return new ModelAndView("redirect:/site");
     }  	
 	
@@ -69,27 +74,10 @@ public class SiteController {
               
     	System.out.println("run: siteListPage");
     	
-        List<Map<String, Object>> siteList = new ArrayList<Map<String, Object>>();
-        
-        Map<String, Object> siteMap1 = new HashMap<String, Object>();
-        siteMap1.put("siteId", "55");
-        siteMap1.put("siteName", "A0001");
-        siteMap1.put("updDate", "2017/09/20 10:55:20");
-        siteList.add(siteMap1);
-        
-        Map<String, Object> siteMap2 = new HashMap<String, Object>();
-        siteMap2.put("siteId", "67");
-        siteMap2.put("siteName", "A0002");
-        siteMap2.put("updDate", "2017/09/20 10:55:20");        
-        siteList.add(siteMap2);
+    	List<Site> siteList = (List<Site>)siteDao.findAll();
         
         ModelAndView modelAndView = new ModelAndView("/site_list");
         modelAndView.addObject("siteList", siteList);
-        
-       //List siteInfos = siteInfoDao.getAll(); 
-        
-        
-       // System.out.println("siteInfos>>>"+siteInfos);
         
         return modelAndView;
     }	
@@ -105,9 +93,12 @@ public class SiteController {
     	System.out.println("run: siteUpdPage");
     	System.out.println("siteId>>>"+siteId);
         
+    	Site site = siteDao.findOne(new Long(siteId));
+    	
         ModelAndView modelAndView = new ModelAndView("/site_edit");
         modelAndView.addObject("siteId", siteId);
-        
+        modelAndView.addObject("site", site);
+            
         return modelAndView;
     }	    
     
@@ -126,6 +117,12 @@ public class SiteController {
     	System.out.println("doEdit: siteId>>>"+siteId);
     	System.out.println("doEdit: siteName>>>"+siteName);
     	
+    	Site site = new Site();
+    	site.setSiteId(new Long(siteId));
+    	site.setSiteName(siteName);
+    	//site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
+    	siteDao.save(site);
+    	
         return new ModelAndView("redirect:/site");
     } 
     
@@ -139,6 +136,8 @@ public class SiteController {
         
     	System.out.println("run: doDel");
     	System.out.println("doDel: siteId>>>"+siteId);
+    	
+    	siteDao.delete(new Long(siteId));
     	
         return new ModelAndView("redirect:/site");
     }       
