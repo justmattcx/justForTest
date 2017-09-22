@@ -40,7 +40,7 @@
  	<c:forEach var="nurse" items="${nurseList}">
 		<tr class="text-info">
 			<td>${nurse.nurseNo} </td>
-			<td>${nurse.updDate}</td>
+			<td>${nurse.updDatetime}</td>
 			<td>
 				<a href="../nurse/edit/${nurse.nurseId}">View</a> / 
 				<a href="../nurse/doDel/${nurse.nurseId}">Del</a>

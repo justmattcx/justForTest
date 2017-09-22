@@ -5,20 +5,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mattcx.t4bn.dao.SiteInfoDao;
+
 @RestController
 @RequestMapping("/site")
 public class SiteController {
 
-    /** 
+
+	
+//	  @Autowired
+//	  private SiteInfoDao siteInfoDao;
+	
+
+	/** 
      * 頁面-新增站點頁
      * --
      *  
@@ -75,6 +85,11 @@ public class SiteController {
         
         ModelAndView modelAndView = new ModelAndView("/site_list");
         modelAndView.addObject("siteList", siteList);
+        
+       //List siteInfos = siteInfoDao.getAll(); 
+        
+        
+       // System.out.println("siteInfos>>>"+siteInfos);
         
         return modelAndView;
     }	
