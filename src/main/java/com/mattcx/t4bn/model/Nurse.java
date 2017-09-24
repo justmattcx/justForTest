@@ -3,7 +3,6 @@ package com.mattcx.t4bn.model;
 import java.sql.Timestamp;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,9 +19,10 @@ import javax.validation.constraints.Null;
 @Table(name = "nurse")
 public class Nurse {
 
-	// ------------------------
-	// PRIVATE FIELDS
-	// ------------------------
+	public Nurse() { }
+
+	public Nurse(long id) { this.nurseId = id; }
+	public Nurse(String nurseNo) { this.nurseNo = nurseNo; }
 	  
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,17 +40,14 @@ public class Nurse {
 	@Null
 	private Timestamp updDatetime;
 	   
-	// ------------------------
-	// PUBLIC METHODS
-	// ------------------------
-	  
-	public Nurse() { }
-
-	public Nurse(long id) { this.nurseId = id; }
-	public Nurse(String nurseNo) { this.nurseNo = nurseNo; }
-
-	// Getter and setter methods
-
+    //@ManyToMany(cascade = CascadeType.ALL)
+	//@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany
+    @JoinTable(name = "site_nurse"
+    			, joinColumns = {@JoinColumn(name = "nurse_id", referencedColumnName = "nurseid")}
+    			, inverseJoinColumns = {@JoinColumn(name = "site_id", referencedColumnName = "siteid")})
+    private Set<Site> sites;	
+	
 	public long getNurseId() { return nurseId; }
 	public void setNurseId(long value) { this.nurseId = value; }
 
@@ -66,21 +63,7 @@ public class Nurse {
 	public Timestamp getUpdDatetime() { return updDatetime; }
 	public void setUpdDatetime(Timestamp value) { this.updDatetime = value; }  
 	
-	
-	
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "site_nurse"
-    			, joinColumns = {@JoinColumn(name = "nurse_id", referencedColumnName = "nurseid")}
-    			, inverseJoinColumns = {@JoinColumn(name = "site_id", referencedColumnName = "siteid")})
-    private Set<Site> sites;
-    
-    public Set<Site> getSites() {
-        return sites;
-    }	
-    
-    public void setSites(Set<Site> sites) {
-        this.sites = sites;
-    }    
-	
+    public Set<Site> getSites() { return sites; }	
+    public void setSites(Set<Site> sites) { this.sites = sites; }    
 	
 }

@@ -1,6 +1,6 @@
 package com.mattcx.t4bn.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,7 +26,6 @@ public class NurseController {
 	
     @Autowired
     private NurseDao nurseDao;	
-	
     @Autowired
     private SiteDao siteDao;	    
     
@@ -39,8 +38,19 @@ public class NurseController {
     public ModelAndView nueseAddPage(){
     	
     	System.out.println("run: nueseAddPage");
-        
         ModelAndView modelAndView = new ModelAndView("/nurse_new");
+        
+        List<Site> siteList = new ArrayList<Site>();
+    	try {
+    		siteList = (List<Site>)siteDao.findAll();    		
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}        
+        modelAndView.addObject("siteList", siteList);        
+        
+        System.out.println("ggg>>>siteList>>>"+siteList);
+        
+        
         return modelAndView;
     }		
 	
@@ -53,6 +63,7 @@ public class NurseController {
     public ModelAndView doAdd(HttpServletRequest req, HttpServletResponse resp) {
         
     	System.out.println("run: doAdd");
+    	ModelAndView modelAndView = new ModelAndView("redirect:/nurse");
     	
     	String nurseNo = req.getParameter("nurseNo");
     	String nurseName = req.getParameter("nurseName");
@@ -62,14 +73,26 @@ public class NurseController {
     	Nurse nurse = new Nurse();
     	nurse.setNurseNo(nurseNo);
     	nurse.setNurseName(nurseName);
+    	
+    	String to[] = req.getParameterValues("to");
+    	Set<Site> siteSet = new HashSet<Site>();
+    	if(null!=to && to.length>0) {
+    		for(int i=0; i<to.length; i++){
+    			System.out.println("to["+i+"]>>>"+to[i]);
+    			Long siteId = Long.parseLong(to[i], 10);
+    			Site site = siteDao.findOne(siteId);
+    			siteSet.add(site);
+    		}
+    	}  	
+    	nurse.setSites(siteSet);
+    	
     	try {
     		nurseDao.save(nurse);
-    		
     	}catch (Exception e) {
     		e.printStackTrace();
     	}
     	
-        return new ModelAndView("redirect:/nurse");
+        return modelAndView;
     } 	
     
     /** 
@@ -81,10 +104,14 @@ public class NurseController {
     public ModelAndView nurseListPage(){
     	
     	System.out.println("run: nurseListPage");
+    	ModelAndView modelAndView = new ModelAndView("/nurse_list");
     	
-    	List<Nurse> nurseList = (List<Nurse>)nurseDao.findAll();
-    	   
-        ModelAndView modelAndView = new ModelAndView("/nurse_list");
+    	List<Nurse> nurseList = new ArrayList<Nurse>();
+    	try {
+    		nurseList = (List<Nurse>)nurseDao.findAll();
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}    	
         modelAndView.addObject("nurseList", nurseList);
         
         return modelAndView;
@@ -99,13 +126,29 @@ public class NurseController {
     public ModelAndView nurseUpdPage(@PathVariable("nurseId") String nurseId){
     	
     	System.out.println("run: nurseUpdPage");
-    	System.out.println("nurseId>>>"+nurseId);
-        
-    	Nurse nurse = nurseDao.findOne(new Long(nurseId));
+    	ModelAndView modelAndView = new ModelAndView("/nurse_edit");
     	
-        ModelAndView modelAndView = new ModelAndView("/nurse_edit");
-        modelAndView.addObject("nurseId", nurseId);
+    	System.out.println("nurseId>>>"+nurseId);
+    	modelAndView.addObject("nurseId", nurseId);
+    	
+    	// 護士Obj
+    	Nurse nurse = nurseDao.findOne(new Long(nurseId));
         modelAndView.addObject("nurse", nurse);
+        
+        // 已分配站點
+    	Set<Site> nurseSiteSet = nurse.getSites();
+    	List<Site> nurseSiteList = new ArrayList<Site>();
+    	nurseSiteList.addAll(nurseSiteSet);        
+        modelAndView.addObject("nurseSiteList", nurseSiteList);
+        
+        // 可分配站點
+        List<Site> siteList = (List<Site>)siteDao.findAll();
+        if( null!=siteList && !siteList.isEmpty()
+        		&& null!=nurseSiteList && !nurseSiteList.isEmpty()) {
+        	siteList.removeAll(nurseSiteList);
+        }
+        modelAndView.addObject("siteList", siteList);
+        
         
         return modelAndView;
     }	    
@@ -124,21 +167,21 @@ public class NurseController {
     	String nurseNo = req.getParameter("nurseNo");
     	String nurseName = req.getParameter("nurseName");
     	
+    	System.out.println("doEdit: nurseId>>>"+nurseId);
+    	System.out.println("doEdit: nurseNo>>>"+nurseNo);
+    	System.out.println("doEdit: nurseName>>>"+nurseName);       
+    	
     	String to[] = req.getParameterValues("to");
+    	Set<Site> siteSet = new HashSet<Site>();
     	if(null!=to && to.length>0) {
     		for(int i=0; i<to.length; i++){
     			System.out.println("to["+i+"]>>>"+to[i]);
+    			
+    			Long siteId = Long.parseLong(to[i], 10);
+    			Site site = siteDao.findOne(siteId);
+    			siteSet.add(site);
     		}
-    		
     	}
-    	
-    	
-    	
-    	
-    	
-    	System.out.println("doEdit: nurseId>>>"+nurseId);
-    	System.out.println("doEdit: nurseNo>>>"+nurseNo);
-    	System.out.println("doEdit: nurseName>>>"+nurseName);   
     	
     	Nurse nurse = new Nurse();
     	nurse.setNurseId(new Long(nurseId));
@@ -146,27 +189,10 @@ public class NurseController {
     	nurse.setNurseName(nurseName);
     	//nurse.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
     	
-    	Set<Site> siteSet = new HashSet<Site>();
-    	Site site1 = new Site();
-    	site1 = siteDao.findOne(2L);
-    	siteSet.add(site1);
     	nurse.setSites(siteSet);
     	
-   	nurseDao.save(nurse);
-//    	nurseDao.save(new HashSet<Nurse>(){
-//    		add(new Nurse("Book A", new HashSet<Publisher>(){{
-//                add(publisherA);
-//                add(publisherB);
-//            }}));
-//    		
-//    		
-//    	});
-//    	
-    	
-    	
-    	
-    	
-    	
+    	nurseDao.save(nurse);
+
         return new ModelAndView("redirect:/nurse");
     } 
     
@@ -181,7 +207,8 @@ public class NurseController {
     	System.out.println("run: doDel");
     	System.out.println("doDel: nurseId>>>"+nurseId);
     	
-    	nurseDao.delete(new Long(nurseId));
+    	Nurse nurse = nurseDao.findOne(Long.parseLong(nurseId, 10));
+    	nurseDao.delete(nurse);
     	
         return new ModelAndView("redirect:/nurse");
     }  	

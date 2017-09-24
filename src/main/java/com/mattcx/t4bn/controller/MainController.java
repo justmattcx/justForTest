@@ -13,14 +13,9 @@ public class MainController {
         System.out.println("run: mainPage>>>main.jsp");
     	
         ModelAndView modelAndView = new ModelAndView("/main");
-        modelAndView.addObject("justTestString", "");
-        
-
+        //modelAndView.addObject("justTestString", "");
         
         return modelAndView;
     }
 	
-    
-
-    
 }

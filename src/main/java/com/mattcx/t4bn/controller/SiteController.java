@@ -137,7 +137,8 @@ public class SiteController {
     	System.out.println("run: doDel");
     	System.out.println("doDel: siteId>>>"+siteId);
     	
-    	siteDao.delete(new Long(siteId));
+    	Site site = siteDao.findOne(Long.parseLong(siteId, 10));
+    	siteDao.delete(site);    	
     	
         return new ModelAndView("redirect:/site");
     }       

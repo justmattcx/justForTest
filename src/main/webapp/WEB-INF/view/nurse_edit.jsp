@@ -56,17 +56,19 @@
 				<div class="col-xs-5">
 					分配站點
 					<select name="to" id="undo_redo_to" class="form-control" 
-						size="8" multiple="multiple"></select>	
+						size="8" multiple="multiple">
+						<c:forEach var="nurseSite" items="${nurseSiteList}">
+							<option value="${nurseSite.siteId}">${nurseSite.siteName}</option>
+						</c:forEach>	
+					</select>	
 				</div>
 				
 				<div class="col-xs-2">
 					<button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block">
-						加入
-						<i class="glyphicon glyphicon-chevron-left"></i>
+						加入<i class="glyphicon glyphicon-chevron-left"></i>
 					</button>
 					<button type="button" id="undo_redo_leftSelected" class="btn btn-default btn-block">
-						移除
-						<i class="glyphicon glyphicon-chevron-right"></i>
+						移除<i class="glyphicon glyphicon-chevron-right"></i>
 					</button>
 				</div>
 				
@@ -74,23 +76,14 @@
 					可選站點
 					<select name="from" id="undo_redo" 
 						class="form-control" size="8" multiple="multiple">
-						<option value="1">站點1</option>
-						<option value="2">站點2</option>
-						<option value="3">站點3</option>
-						<option value="4">站點4</option>
-						<option value="5">站點5</option>
+						<c:forEach var="site" items="${siteList}">
+							<option value="${site.siteId}">${site.siteName}</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div> 			
 			
-			
-			
-			
   		</div>
-  		
-  		
- 		
-  		
   		
 	</form>
 
@@ -108,7 +101,6 @@
 	});
 	
 </script>
-
 
 </body>
 </html>
