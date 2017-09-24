@@ -9,7 +9,7 @@
 
 <title>修改站點資料</title>	
 	
-<link href="../../vendor/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="../../vendor/bootstrap/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- Custom styles for this template -->
 <link href="../../css/siteedit.css" rel="stylesheet">
 
@@ -48,7 +48,8 @@
 </div></div>
 <!-- end: container -->
    
-<script src="../../vendor/jquery-3.2.1/jquery-3.2.1.js"></script>
-<script src="../../vendor/bootstrap-3.3.7/js/bootstrap.js"></script>
+<script src="../../vendor/jquery/jquery-3.2.1/jquery-3.2.1.js"></script>
+<script src="../../vendor/bootstrap/bootstrap-3.3.7/js/bootstrap.js"></script>
+
 </body>
 </html>

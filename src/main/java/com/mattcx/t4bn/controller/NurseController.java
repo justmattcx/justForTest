@@ -1,6 +1,9 @@
 package com.mattcx.t4bn.controller;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mattcx.t4bn.dao.NurseDao;
+import com.mattcx.t4bn.dao.SiteDao;
 import com.mattcx.t4bn.model.Nurse;
 import com.mattcx.t4bn.model.Site;
 
@@ -23,7 +27,9 @@ public class NurseController {
     @Autowired
     private NurseDao nurseDao;	
 	
-	
+    @Autowired
+    private SiteDao siteDao;	    
+    
     /** 
      * 頁面-新增站點頁
      * --
@@ -118,6 +124,18 @@ public class NurseController {
     	String nurseNo = req.getParameter("nurseNo");
     	String nurseName = req.getParameter("nurseName");
     	
+    	String to[] = req.getParameterValues("to");
+    	if(null!=to && to.length>0) {
+    		for(int i=0; i<to.length; i++){
+    			System.out.println("to["+i+"]>>>"+to[i]);
+    		}
+    		
+    	}
+    	
+    	
+    	
+    	
+    	
     	System.out.println("doEdit: nurseId>>>"+nurseId);
     	System.out.println("doEdit: nurseNo>>>"+nurseNo);
     	System.out.println("doEdit: nurseName>>>"+nurseName);   
@@ -127,7 +145,27 @@ public class NurseController {
     	nurse.setNurseNo(nurseNo);
     	nurse.setNurseName(nurseName);
     	//nurse.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
-    	nurseDao.save(nurse);
+    	
+    	Set<Site> siteSet = new HashSet<Site>();
+    	Site site1 = new Site();
+    	site1 = siteDao.findOne(2L);
+    	siteSet.add(site1);
+    	nurse.setSites(siteSet);
+    	
+   	nurseDao.save(nurse);
+//    	nurseDao.save(new HashSet<Nurse>(){
+//    		add(new Nurse("Book A", new HashSet<Publisher>(){{
+//                add(publisherA);
+//                add(publisherB);
+//            }}));
+//    		
+//    		
+//    	});
+//    	
+    	
+    	
+    	
+    	
     	
         return new ModelAndView("redirect:/nurse");
     } 

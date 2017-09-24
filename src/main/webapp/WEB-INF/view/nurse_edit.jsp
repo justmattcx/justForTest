@@ -9,7 +9,7 @@
 
 <title>修改護士資料</title>	
 	
-<link href="../../vendor/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="../../vendor/bootstrap/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- Custom styles for this template -->
 <link href="../../css/nurseedit.css" rel="stylesheet">
 
@@ -24,7 +24,6 @@
 		<a href="#" class="navbar-brand" >修改護士資料</a>
 	</div>	
 </nav>
-
 
 <!-- start: container -->
 <div class="container"><div class="common-container">
@@ -50,12 +49,66 @@
       			<button type="submit" class="btn btn-default">儲存新增</button>
     		</div>
   		</div>
+  		
+  		<div class="form-group">
+			
+			<div class="row">
+				<div class="col-xs-5">
+					分配站點
+					<select name="to" id="undo_redo_to" class="form-control" 
+						size="8" multiple="multiple"></select>	
+				</div>
+				
+				<div class="col-xs-2">
+					<button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block">
+						加入
+						<i class="glyphicon glyphicon-chevron-left"></i>
+					</button>
+					<button type="button" id="undo_redo_leftSelected" class="btn btn-default btn-block">
+						移除
+						<i class="glyphicon glyphicon-chevron-right"></i>
+					</button>
+				</div>
+				
+				<div class="col-xs-5">
+					可選站點
+					<select name="from" id="undo_redo" 
+						class="form-control" size="8" multiple="multiple">
+						<option value="1">站點1</option>
+						<option value="2">站點2</option>
+						<option value="3">站點3</option>
+						<option value="4">站點4</option>
+						<option value="5">站點5</option>
+					</select>
+				</div>
+			</div> 			
+			
+			
+			
+			
+  		</div>
+  		
+  		
+ 		
+  		
+  		
 	</form>
 
 </div></div>
 <!-- end: container -->
    
-<script src="../../vendor/jquery-3.2.1/jquery-3.2.1.js"></script>
-<script src="../../vendor/bootstrap-3.3.7/js/bootstrap.js"></script>
+<script src="../../vendor/jquery/jquery-3.2.1/jquery-3.2.1.js"></script>
+<script src="../../vendor/bootstrap/bootstrap-3.3.7/js/bootstrap.js"></script>
+<script src="../../vendor/jquery/multiselect-2.0.0/multiselect.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+
+		$('#undo_redo').multiselect();
+	});
+	
+</script>
+
+
 </body>
 </html>
