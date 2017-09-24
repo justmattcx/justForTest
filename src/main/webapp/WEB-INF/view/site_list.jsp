@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.mattcx.t4bn.common.Common" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="<%=request.getContextPath()%>" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,15 +9,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>站點列表</title>	
-<link href="../vendor/bootstrap/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="${contextPath}/vendor/bootstrap/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- Custom styles for this template -->
-<link href="../css/sitelist.css" rel="stylesheet">
+<link href="${contextPath}/css/sitelist.css" rel="stylesheet">
 </head>
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header" >
-		<a href="../main" class="btn navbar-btn pull-left" role="button">
+		<a href="${contextPath}/main" class="btn navbar-btn pull-left" role="button">
 			<span class="glyphicon glyphicon-chevron-left"></span>
 		</a>
 		<a href="#" class="navbar-brand" >站點列表</a>
@@ -39,8 +40,8 @@
 			<td>${site.siteName} </td>
 			<td>${Common.timestampFormat(site.updDatetime,"yyyy/MM/dd HH:mm:ss")}</td>
 			<td>
-				<a href="../site/edit/${site.siteId}">View</a> / 
-				<a href="../site/doDel/${site.siteId}">Del</a>
+				<a href="${contextPath}/site/edit/${site.siteId}">View</a> / 
+				<a href="${contextPath}/site/doDel/${site.siteId}">Del</a>
 			</td>
 		</tr>
 	</c:forEach>	
@@ -50,7 +51,7 @@
 </div></div>
 <!-- end: container -->
    
-<script src="../vendor/jquery/jquery-3.2.1/jquery-3.2.1.js"></script>
-<script src="../vendor/bootstrap/bootstrap-3.3.7/js/bootstrap.js"></script>
+<script src="${contextPath}/vendor/jquery/jquery-3.2.1/jquery-3.2.1.js"></script>
+<script src="${contextPath}/vendor/bootstrap/bootstrap-3.3.7/js/bootstrap.js"></script>
 </body>
 </html>

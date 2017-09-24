@@ -2,16 +2,24 @@ package com.mattcx.t4bn;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
 @SpringBootApplication
-public class RunApplication {
+public class RunApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		 SpringApplication.run(RunApplication.class, args);
+	}
+
+	// deploy external tomcat, Override configure method...
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(RunApplication.class);
 	}
 
 	@Bean

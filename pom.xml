@@ -6,6 +6,8 @@
 	<groupId>com.mattcx.t4bn</groupId>
 	<artifactId>t4bn</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>t4bn</name>
+	<packaging>war</packaging>
   
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,6 +26,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- 打包war... -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		
 		<!-- tomcat 8.5.15 => jsp -->
@@ -57,8 +66,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>		
-		 
-	 
 		 
 	</dependencies>  
   

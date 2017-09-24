@@ -1,18 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="<%=request.getContextPath()%>" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>修改護士資料</title>	
-	
-<link href="../../vendor/bootstrap/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="${contextPath}/vendor/bootstrap/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- Custom styles for this template -->
-<link href="../../css/nurseedit.css" rel="stylesheet">
-
+<link href="${contextPath}/css/nurseedit.css" rel="stylesheet">
 </head>
 <body>
 
@@ -27,7 +25,7 @@
 
 <!-- start: container -->
 <div class="container"><div class="common-container">
-	<form action="../doEdit" method="post" class="form-horizontal">
+	<form action="${contextPath}/nurse/doEdit" method="post" class="form-horizontal">
 		<input type=hidden id="nurseId" name="nurseId" value="${nurseId}" >
 		<div class="form-group">
 			<label for="inputNurseNo" class="col-sm-4 control-label">員工編號</label>
@@ -90,9 +88,9 @@
 </div></div>
 <!-- end: container -->
    
-<script src="../../vendor/jquery/jquery-3.2.1/jquery-3.2.1.js"></script>
-<script src="../../vendor/bootstrap/bootstrap-3.3.7/js/bootstrap.js"></script>
-<script src="../../vendor/jquery/multiselect-2.0.0/multiselect.js"></script>
+<script src="${contextPath}/vendor/jquery/jquery-3.2.1/jquery-3.2.1.js"></script>
+<script src="${contextPath}/vendor/bootstrap/bootstrap-3.3.7/js/bootstrap.js"></script>
+<script src="${contextPath}/vendor/jquery/multiselect-2.0.0/multiselect.js"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function() {
@@ -101,6 +99,5 @@
 	});
 	
 </script>
-
 </body>
 </html>

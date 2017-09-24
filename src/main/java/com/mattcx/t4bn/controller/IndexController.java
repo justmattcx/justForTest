@@ -6,22 +6,25 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("/main")
-public class MainController {
+@RequestMapping("")
+public class IndexController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
     /** 
-     * 頁面-首頁
+     * 頁面-入口點
      * --
      *  
      * */	
     @RequestMapping("")
-    public ModelAndView mainPage(){ 	
+    public ModelAndView indexPage(){ 	
     	logger.debug("mainPage");
-
-        ModelAndView modelAndView = new ModelAndView("/main");
-        return modelAndView;
+    	// logger.trace("mainPage");
+    	// logger.debug("mainPage");
+    	// logger.info("mainPage");
+    	// logger.warn("mainPage");
+    	// logger.error("mainPage");
+    	return new ModelAndView("redirect:/main");
     }
 	
 }
