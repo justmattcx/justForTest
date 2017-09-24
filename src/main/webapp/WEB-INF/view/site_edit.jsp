@@ -23,15 +23,13 @@
 	</div>	
 </nav>
 
-<!-- end: container -->
+<!-- start: container -->
 <div class="container"><div class="common-container">
-
 	<form action="${contextPath}/site/doEdit" method="post" 
 		data-toggle="validator" class="form-horizontal">
-		
 		<input type=hidden id="siteId" name="siteId" value="${siteId}" >
 		<div class="form-group">
-			<label for="inputSiteName" class="col-sm-4 control-label">站點名稱</label>
+			<label for="inputSiteName" class="col-sm-2 control-label">站點名稱</label>
 			<div class="col-sm-6">
 				<input type=text class="form-control" id="siteName" name="siteName" maxlength="20"
 					value="${site.siteName}" autocomplete="off" placeholder="請輸入站點名稱" required>
@@ -39,8 +37,8 @@
 			<div class="help-block with-errors"></div>
 		</div>
 		<div class="form-group">
-			<div class="col-sm-offset-4 col-sm-10">
-      			<button type="submit" class="btn btn-default">確定修改</button>
+			<div class="col-sm-offset-2 col-sm-1">
+      			<button type="submit" class="btn btn-primary">確定修改</button>
     		</div>
   		</div>
 	</form>

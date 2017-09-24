@@ -1,6 +1,6 @@
 
 body {
-  padding-top: 90px;
+  padding-top: 50px;
 }
 
 .common-container {
@@ -11,11 +11,3 @@ body {
 .sitelist-container {
 	padding: 40px 15px;
 }
-
-
-/*
-.mybtn{float:left;padding:15px;display:inline-block;}
-
-.mycontainer{display:flex;align-items:center;}
-
-*/

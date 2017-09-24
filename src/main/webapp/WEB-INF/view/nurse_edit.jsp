@@ -27,7 +27,6 @@
 <div class="container"><div class="common-container">
 	<form action="${contextPath}/nurse/doEdit" method="post" 
 		class="form-horizontal" data-toggle="validator" >
-	
 		<input type=hidden id="nurseId" name="nurseId" value="${nurseId}" >
 		<div class="form-group">
 			<label for="inputNurseNo" class="col-sm-2 control-label">員工編號</label>
@@ -47,23 +46,23 @@
 		</div>
 		 
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-2">
-      			<button type="submit" class="btn btn-default">儲存修改</button>
+			<div class="col-sm-offset-2 col-sm-1">
+      			<button type="submit" class="btn btn-primary" id="doSaveBtn">儲存修改</button>
     		</div>
-  		</div>  		
-  		
+  		</div>  		  		
+  		<hr/>
   		<div class="form-group">
 			
 			<div class="col-xs-4">
 				分配站點
 				<select name="to" id="undo_redo_to" class="form-control" size="8" multiple="multiple">
 					<c:forEach var="nurseSite" items="${nurseSiteList}">
-						<option value="${nurseSite.siteId}">${nurseSite.siteName}</option>
-					</c:forEach>	
+						<option value="${nurseSite.siteId}">${nurseSite.siteName}</option></c:forEach>	
 				</select>	
 			</div>
 				
 			<div class="col-xs-2">
+				<br/>
 				<button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block">
 					加入<i class="glyphicon glyphicon-chevron-left"></i>
 				</button>
@@ -95,6 +94,9 @@
 	
 	$(document).ready(function() {
 		$('#undo_redo').multiselect();
+		$('#doSaveBtn').click(function() {
+		    $('#undo_redo_to option').prop('selected', true);
+		});				
 	});
 	
 </script>

@@ -30,16 +30,16 @@
 		data-toggle="validator" class="form-horizontal" >
 		
 		<div class="form-group">
-			<label for="inputSiteName" class="col-sm-4 control-label">站點名稱</label>
-			<div class="col-sm-6">
+			<label for="inputSiteName" class="col-sm-2 control-label">站點名稱</label>
+			<div class="col-sm-7">
 				<input type=text class="form-control" id="siteName" name="siteName" 
 					maxlength="20" autocomplete="off" placeholder="請輸入站點名稱" required >
 			</div>
 			<div class="help-block with-errors"></div>
 		</div>
 		<div class="form-group">
-			<div class="col-sm-offset-4 col-sm-10">
-      			<button type="submit" class="btn btn-default">確定新增</button>
+			<div class="col-sm-offset-2 col-sm-2">
+      			<button type="submit" class="btn btn-primary">確定新增</button>
     		</div>
   		</div>
 	</form>
