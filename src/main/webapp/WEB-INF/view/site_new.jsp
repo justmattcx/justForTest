@@ -26,12 +26,16 @@
 <!-- start: container -->
 <div class="container"><div class="commom-container">
 
-	<form action="${contextPath}/site/doAdd" method="post" class="form-horizontal" >
+	<form action="${contextPath}/site/doAdd" method="post" 
+		data-toggle="validator" class="form-horizontal" >
+		
 		<div class="form-group">
 			<label for="inputSiteName" class="col-sm-4 control-label">站點名稱</label>
 			<div class="col-sm-6">
-				<input type=text class="form-control" id="siteName" name="siteName" placeholder="請輸入站點名稱">
-			</div> 
+				<input type=text class="form-control" id="siteName" name="siteName" 
+					maxlength="20" autocomplete="off" placeholder="請輸入站點名稱" required >
+			</div>
+			<div class="help-block with-errors"></div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-4 col-sm-10">
@@ -45,5 +49,6 @@
    
 <script src="${contextPath}/vendor/jquery/jquery-3.2.1/jquery-3.2.1.js"></script>
 <script src="${contextPath}/vendor/bootstrap/bootstrap-3.3.7/js/bootstrap.js"></script>
+<script src="${contextPath}/vendor/bootstrap/bootstrap-validator-0.11.9/validator.js"></script>
 </body>
 </html>

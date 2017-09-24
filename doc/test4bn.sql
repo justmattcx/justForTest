@@ -1,12 +1,12 @@
 -- just for BN Test
 
 -- DB Name
-CREATE DATABASE test4bn3;
+CREATE DATABASE test4bn56;
 
 -- 站點
 CREATE TABLE site (
 	site_id bigint(20) NOT NULL,
-	site_name varchar(255) NOT NULL,  
+	site_name varchar(50) NOT NULL,  
 	crt_datetime datetime DEFAULT NULL,
 	upd_datetime datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -17,8 +17,8 @@ ALTER TABLE site MODIFY site_id bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREME
 -- 護士
 CREATE TABLE nurse (
 	nurse_id bigint(20) NOT NULL,
-	nurse_no varchar(255) NOT NULL,
-	nurse_name varchar(255) NOT NULL,
+	nurse_no varchar(50) NOT NULL,
+	nurse_name varchar(50) NOT NULL,
 	crt_datetime datetime DEFAULT NULL,
 	upd_datetime datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
