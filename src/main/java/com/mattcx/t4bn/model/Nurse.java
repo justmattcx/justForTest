@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import javax.persistence.*;
+import javax.persistence.JoinColumn;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 @Entity
 @Table(name = "nurse")
@@ -34,10 +33,8 @@ public class Nurse {
 	@NotNull
 	private String nurseName;
 
-	@Null
 	private Timestamp crtDatetime;
 	  
-	@Null
 	private Timestamp updDatetime;
 	   
     //@ManyToMany(cascade = CascadeType.ALL)
@@ -65,5 +62,11 @@ public class Nurse {
 	
     public Set<Site> getSites() { return sites; }	
     public void setSites(Set<Site> sites) { this.sites = sites; }    
+	
+	@Override
+	public String toString() {
+		return "Nurse [nurseId=" + nurseId + ", nurseNo=" + nurseNo + ", nurseName=" + nurseName + ", crtDatetime="
+				+ crtDatetime + ", updDatetime=" + updDatetime + "]";
+	}    
 	
 }

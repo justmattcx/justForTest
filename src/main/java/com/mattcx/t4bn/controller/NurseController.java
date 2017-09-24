@@ -1,5 +1,6 @@
 package com.mattcx.t4bn.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,8 @@ import com.mattcx.t4bn.model.Site;
 @RequestMapping("/nurse")
 public class NurseController {
 	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     @Autowired
     private NurseDao nurseDao;	
     @Autowired
@@ -36,8 +41,8 @@ public class NurseController {
      * */
     @RequestMapping("/add")
     public ModelAndView nueseAddPage(){
+    	logger.debug("nueseAddPage");
     	
-    	System.out.println("run: nueseAddPage");
         ModelAndView modelAndView = new ModelAndView("/nurse_new");
         
         List<Site> siteList = new ArrayList<Site>();
@@ -48,8 +53,7 @@ public class NurseController {
     	}        
         modelAndView.addObject("siteList", siteList);        
         
-        System.out.println("ggg>>>siteList>>>"+siteList);
-        
+        logger.trace("siteList: {}",siteList);
         
         return modelAndView;
     }		
@@ -61,24 +65,25 @@ public class NurseController {
      * */
     @RequestMapping(value = "/doAdd", method = RequestMethod.POST)
     public ModelAndView doAdd(HttpServletRequest req, HttpServletResponse resp) {
-        
-    	System.out.println("run: doAdd");
-    	ModelAndView modelAndView = new ModelAndView("redirect:/nurse");
+    	logger.debug("doAdd");
     	
     	String nurseNo = req.getParameter("nurseNo");
     	String nurseName = req.getParameter("nurseName");
-    	System.out.println("doAdd: nurseNo>>>"+nurseNo);
-    	System.out.println("doAdd: nurseName>>>"+nurseName);
+    	logger.trace("nurseNo=", nurseNo);
+    	logger.trace("nurseName=", nurseName);
     	
     	Nurse nurse = new Nurse();
     	nurse.setNurseNo(nurseNo);
     	nurse.setNurseName(nurseName);
+    	nurse.setCrtDatetime(new Timestamp(System.currentTimeMillis()));    
+    	nurse.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    
     	
     	String to[] = req.getParameterValues("to");
     	Set<Site> siteSet = new HashSet<Site>();
     	if(null!=to && to.length>0) {
     		for(int i=0; i<to.length; i++){
-    			System.out.println("to["+i+"]>>>"+to[i]);
+    			logger.trace(("to["+i+"]="), to[i]);
+
     			Long siteId = Long.parseLong(to[i], 10);
     			Site site = siteDao.findOne(siteId);
     			siteSet.add(site);
@@ -92,7 +97,7 @@ public class NurseController {
     		e.printStackTrace();
     	}
     	
-        return modelAndView;
+        return new ModelAndView("redirect:/nurse");
     } 	
     
     /** 
@@ -102,8 +107,8 @@ public class NurseController {
      * */	
     @RequestMapping("")
     public ModelAndView nurseListPage(){
+    	logger.debug("nurseListPage");
     	
-    	System.out.println("run: nurseListPage");
     	ModelAndView modelAndView = new ModelAndView("/nurse_list");
     	
     	List<Nurse> nurseList = new ArrayList<Nurse>();
@@ -113,6 +118,7 @@ public class NurseController {
     		e.printStackTrace();
     	}    	
         modelAndView.addObject("nurseList", nurseList);
+        logger.trace("nurseList: {}",nurseList);
         
         return modelAndView;
     }	
@@ -124,22 +130,24 @@ public class NurseController {
      * */    
     @RequestMapping("/edit/{nurseId}")
     public ModelAndView nurseUpdPage(@PathVariable("nurseId") String nurseId){
+    	logger.debug("nurseUpdPage");
     	
-    	System.out.println("run: nurseUpdPage");
     	ModelAndView modelAndView = new ModelAndView("/nurse_edit");
     	
-    	System.out.println("nurseId>>>"+nurseId);
+    	logger.trace("nurseId=", nurseId);
     	modelAndView.addObject("nurseId", nurseId);
     	
     	// 護士Obj
     	Nurse nurse = nurseDao.findOne(new Long(nurseId));
         modelAndView.addObject("nurse", nurse);
+        logger.trace("nurse=", nurse.toString());  
         
         // 已分配站點
     	Set<Site> nurseSiteSet = nurse.getSites();
     	List<Site> nurseSiteList = new ArrayList<Site>();
     	nurseSiteList.addAll(nurseSiteSet);        
         modelAndView.addObject("nurseSiteList", nurseSiteList);
+        logger.trace("nurseSiteList: {}", nurseSiteList);
         
         // 可分配站點
         List<Site> siteList = (List<Site>)siteDao.findAll();
@@ -148,7 +156,7 @@ public class NurseController {
         	siteList.removeAll(nurseSiteList);
         }
         modelAndView.addObject("siteList", siteList);
-        
+        logger.trace("siteList: {}", siteList);
         
         return modelAndView;
     }	    
@@ -160,25 +168,21 @@ public class NurseController {
      * */
     @RequestMapping(value = "/doEdit", method = RequestMethod.POST)
     public ModelAndView doEdit(HttpServletRequest req, HttpServletResponse resp) {
-        
-    	System.out.println("run: doEdit");
-    	
+    	logger.debug("doEdit");
+    	    	
     	String nurseId = req.getParameter("nurseId");
     	String nurseNo = req.getParameter("nurseNo");
     	String nurseName = req.getParameter("nurseName");
-    	
-    	System.out.println("doEdit: nurseId>>>"+nurseId);
-    	System.out.println("doEdit: nurseNo>>>"+nurseNo);
-    	System.out.println("doEdit: nurseName>>>"+nurseName);       
+    	logger.trace("nurseId=", nurseId);
+    	logger.trace("nurseNo=", nurseNo);
+    	logger.trace("nurseName=", nurseName);
     	
     	String to[] = req.getParameterValues("to");
     	Set<Site> siteSet = new HashSet<Site>();
     	if(null!=to && to.length>0) {
     		for(int i=0; i<to.length; i++){
-    			System.out.println("to["+i+"]>>>"+to[i]);
-    			
-    			Long siteId = Long.parseLong(to[i], 10);
-    			Site site = siteDao.findOne(siteId);
+    			logger.trace(("to["+i+"]="), to[i]);
+    			Site site = siteDao.findOne(Long.parseLong(to[i], 10));
     			siteSet.add(site);
     		}
     	}
@@ -187,10 +191,8 @@ public class NurseController {
     	nurse.setNurseId(new Long(nurseId));
     	nurse.setNurseNo(nurseNo);
     	nurse.setNurseName(nurseName);
-    	//nurse.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
-    	
+    	nurse.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
     	nurse.setSites(siteSet);
-    	
     	nurseDao.save(nurse);
 
         return new ModelAndView("redirect:/nurse");
@@ -203,9 +205,8 @@ public class NurseController {
      * */
     @RequestMapping("/doDel/{nurseId}")
     public ModelAndView doDel(@PathVariable("nurseId") String nurseId) {
-        
-    	System.out.println("run: doDel");
-    	System.out.println("doDel: nurseId>>>"+nurseId);
+    	logger.debug("doDel");
+    	logger.trace("nurseId=", nurseId);
     	
     	Nurse nurse = nurseDao.findOne(Long.parseLong(nurseId, 10));
     	nurseDao.delete(nurse);

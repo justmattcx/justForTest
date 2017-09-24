@@ -1,10 +1,13 @@
 package com.mattcx.t4bn.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,8 @@ import com.mattcx.t4bn.model.Site;
 @RequestMapping("/site")
 public class SiteController {
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     @Autowired
     private SiteDao siteDao;
 	
@@ -29,8 +34,7 @@ public class SiteController {
      * */
     @RequestMapping("/add")
     public ModelAndView siteAddPage(){
-    	
-    	System.out.println("run: siteAddPage");
+    	logger.debug("siteAddPage");
     	
         ModelAndView modelAndView = new ModelAndView("/site_new");
         return modelAndView;
@@ -42,21 +46,19 @@ public class SiteController {
      * 
      * */
     @RequestMapping(value = "/doAdd", method = RequestMethod.POST)
-    public ModelAndView doAdd(HttpServletRequest req, HttpServletResponse resp) {
-        
-    	System.out.println("run: doAdd");
-    	
+    public ModelAndView doAdd(HttpServletRequest req, HttpServletResponse resp) {        
+    	logger.debug("doAdd");
+
     	String siteName = req.getParameter("siteName");
-    	System.out.println("doAdd: siteName>>>"+siteName);
+    	logger.trace("siteName=", siteName);
     	
     	Site site = new Site();
     	site.setSiteName(siteName);
-    	//site.setCrtDatetime(new Timestamp(System.currentTimeMillis()));
-    	//site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));
+    	site.setCrtDatetime(new Timestamp(System.currentTimeMillis()));
+    	site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));
     	
     	try {
     		siteDao.save(site);
-    		
     	}catch (Exception e) {
     		e.printStackTrace();
     	}    	
@@ -71,11 +73,11 @@ public class SiteController {
      * */
     @RequestMapping("")
     public ModelAndView siteListPage(){
-              
-    	System.out.println("run: siteListPage");
+    	logger.debug("siteListPage");
     	
     	List<Site> siteList = (List<Site>)siteDao.findAll();
-        
+    	logger.trace("siteList: {}", siteList);
+    	
         ModelAndView modelAndView = new ModelAndView("/site_list");
         modelAndView.addObject("siteList", siteList);
         
@@ -89,13 +91,14 @@ public class SiteController {
      * */
     @RequestMapping("/edit/{siteId}")
     public ModelAndView siteUpdPage(@PathVariable("siteId") String siteId){
+    	logger.debug("siteUpdPage");
+    	logger.trace("siteId=", siteId);
     	
-    	System.out.println("run: siteUpdPage");
-    	System.out.println("siteId>>>"+siteId);
-        
+    	ModelAndView modelAndView = new ModelAndView("/site_edit");
+    	
     	Site site = siteDao.findOne(new Long(siteId));
+    	logger.trace("site=", site.toString());        
     	
-        ModelAndView modelAndView = new ModelAndView("/site_edit");
         modelAndView.addObject("siteId", siteId);
         modelAndView.addObject("site", site);
             
@@ -109,18 +112,17 @@ public class SiteController {
      * */
     @RequestMapping(value = "/doEdit", method = RequestMethod.POST)
     public ModelAndView doEdit(HttpServletRequest req, HttpServletResponse resp) {
-        
-    	System.out.println("run: doEdit");
+    	logger.debug("doEdit");
     	
     	String siteId = req.getParameter("siteId");
     	String siteName = req.getParameter("siteName");
-    	System.out.println("doEdit: siteId>>>"+siteId);
-    	System.out.println("doEdit: siteName>>>"+siteName);
+    	logger.trace("siteId=", siteId);    
+    	logger.trace("siteName=", siteName);    
     	
     	Site site = new Site();
     	site.setSiteId(new Long(siteId));
     	site.setSiteName(siteName);
-    	//site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
+    	site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
     	siteDao.save(site);
     	
         return new ModelAndView("redirect:/site");
@@ -133,9 +135,9 @@ public class SiteController {
      * */
     @RequestMapping("/doDel/{siteId}")
     public ModelAndView doDel(@PathVariable("siteId") String siteId) {
-        
-    	System.out.println("run: doDel");
-    	System.out.println("doDel: siteId>>>"+siteId);
+    	logger.debug("doDel");
+
+    	logger.trace("siteId=", siteId);  
     	
     	Site site = siteDao.findOne(Long.parseLong(siteId, 10));
     	siteDao.delete(site);    	

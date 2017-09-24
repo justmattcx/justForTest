@@ -12,13 +12,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 @Entity
 @Table(name = "site")
 public class Site {	
 
-    public Site(){}
+	public Site(){}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +26,8 @@ public class Site {
 	@NotNull
 	private String siteName;
   
-	@Null
 	private Timestamp crtDatetime;
 	  
-	@Null
 	private Timestamp updDatetime;
 
     @ManyToMany
@@ -54,4 +51,10 @@ public class Site {
     public Set<Nurse> getNurses() { return nurses; }
     public void setNurses(Set<Nurse> nurses) { this.nurses = nurses; }	
 	
+    @Override
+	public String toString() {
+		return "Site [siteId=" + siteId + ", siteName=" + siteName + ", crtDatetime=" + crtDatetime + ", updDatetime="
+				+ updDatetime + "]";
+	}    
+  
 }

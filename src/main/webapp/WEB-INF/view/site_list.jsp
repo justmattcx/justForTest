@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.mattcx.t4bn.common.Common" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <!DOCTYPE html>
 <html>
@@ -6,13 +7,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>站點列表</title>	
-	
 <link href="../vendor/bootstrap/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet" media="screen">
 <!-- Custom styles for this template -->
 <link href="../css/sitelist.css" rel="stylesheet">
-
 </head>
 <body>
 
@@ -34,13 +32,12 @@
 	<th>修改時間</th>
 	<th>動作</th>
 </tr></thead>
-	
 <tbody>
 	
  	<c:forEach var="site" items="${siteList}">
 		<tr class="text-info">
 			<td>${site.siteName} </td>
-			<td>${site.updDatetime}</td>
+			<td>${Common.timestampFormat(site.updDatetime,"yyyy/MM/dd HH:mm:ss")}</td>
 			<td>
 				<a href="../site/edit/${site.siteId}">View</a> / 
 				<a href="../site/doDel/${site.siteId}">Del</a>
