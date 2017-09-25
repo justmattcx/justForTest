@@ -30,7 +30,7 @@
 		<input type=hidden id="siteId" name="siteId" value="${siteId}" >
 		<div class="form-group">
 			<label for="inputSiteName" class="col-sm-2 control-label">站點名稱</label>
-			<div class="col-sm-6">
+			<div class="col-sm-7">
 				<input type=text class="form-control" id="siteName" name="siteName" maxlength="20"
 					value="${site.siteName}" autocomplete="off" placeholder="請輸入站點名稱" required>
 			</div>
@@ -40,6 +40,25 @@
 			<div class="col-sm-offset-2 col-sm-1">
       			<button type="submit" class="btn btn-primary">確定修改</button>
     		</div>
+  		</div>
+  		<hr/>
+  		<div class="form-group col-sm-11">
+			<table class="table table-hover">
+				<thead><tr>
+					<th>員工編號</th>
+					<th>護士姓名</th>
+				</tr></thead>
+				<tbody>
+				
+				<c:forEach var="nurse" items="${nurseList}">
+					<tr class="text-info">
+						<td>${nurse.nurseNo} </td>
+						<td>${nurse.nurseName} </td>					
+					</tr>	
+				</c:forEach>
+		
+				</tbody>
+			</table>  		
   		</div>
 	</form>
 

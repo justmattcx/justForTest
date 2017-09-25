@@ -29,7 +29,8 @@
 <div class="sitelist-container">
 <table class="table table-hover">
 <thead><tr>
-	<th>員編</th>
+	<th>員工編號</th>
+	<th>護士姓名</th>
 	<th>修改時間</th>
 	<th>動作</th>
 </tr></thead>
@@ -38,6 +39,7 @@
  	<c:forEach var="nurse" items="${nurseList}">
 		<tr class="text-info">
 			<td>${nurse.nurseNo} </td>
+			<td>${nurse.nurseName} </td>
 			<td>${Common.timestampFormat(nurse.updDatetime,"yyyy/MM/dd HH:mm:ss")}</td>
 			<td>
 				<a href="${contextPath}/nurse/edit/${nurse.nurseId}">View</a> / 

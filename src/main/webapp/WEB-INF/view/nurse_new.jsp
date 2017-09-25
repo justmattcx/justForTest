@@ -32,7 +32,7 @@
 		
 		<div class="form-group">
 			<label for="inputNurseNo" class="col-sm-2 control-label">員工編號</label>
-			<div class="col-sm-6">
+			<div class="col-sm-7">
 				<input type=text class="form-control" id="nurseNo" name="nurseNo" 
 					placeholder="請輸入員工編號" autocomplete="off" maxlength="20" required>					
 			</div>
@@ -61,7 +61,7 @@
 				
 			<div class="col-xs-2">
 				<br/>
-				<button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block">
+				<button type="button" id="undo_redo_rightSelected" class="btn btn-basic btn-block">
 					加入<i class="glyphicon glyphicon-chevron-left"></i>
 				</button>
 				<button type="button" id="undo_redo_leftSelected" class="btn btn-default btn-block">

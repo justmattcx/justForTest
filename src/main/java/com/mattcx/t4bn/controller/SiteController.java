@@ -1,7 +1,9 @@
 package com.mattcx.t4bn.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mattcx.t4bn.dao.NurseDao;
 import com.mattcx.t4bn.dao.SiteDao;
+import com.mattcx.t4bn.model.Nurse;
 import com.mattcx.t4bn.model.Site;
 
 @RestController
@@ -26,7 +30,7 @@ public class SiteController {
 	
     @Autowired
     private SiteDao siteDao;
-	
+    
 	/** 
      * 頁面-新增站點頁
      * --
@@ -102,6 +106,11 @@ public class SiteController {
         modelAndView.addObject("siteId", siteId);
         modelAndView.addObject("site", site);
             
+    	Set<Nurse> nurseSet = site.getNurses();
+    	List<Nurse> nurseList = new ArrayList<Nurse>();
+    	nurseList.addAll(nurseSet);        
+    	modelAndView.addObject("nurseList", nurseList);
+        
         return modelAndView;
     }	    
     
