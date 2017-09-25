@@ -128,8 +128,7 @@ public class SiteController {
     	logger.trace("siteId=", siteId);    
     	logger.trace("siteName=", siteName);    
     	
-    	Site site = new Site();
-    	site.setSiteId(new Long(siteId));
+    	Site site = siteDao.findOne(new Long(siteId));
     	site.setSiteName(siteName);
     	site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
     	siteDao.save(site);

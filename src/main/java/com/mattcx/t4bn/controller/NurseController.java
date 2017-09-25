@@ -187,8 +187,7 @@ public class NurseController {
     		}
     	}
     	
-    	Nurse nurse = new Nurse();
-    	nurse.setNurseId(new Long(nurseId));
+    	Nurse nurse = nurseDao.findOne(new Long(nurseId));
     	nurse.setNurseNo(nurseNo);
     	nurse.setNurseName(nurseName);
     	nurse.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	

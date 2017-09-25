@@ -1,7 +1,7 @@
 -- just for BN Test
 
 -- DB Name
-CREATE DATABASE test4bn56;
+CREATE DATABASE test4bn99;
 
 -- 站點
 CREATE TABLE site (
