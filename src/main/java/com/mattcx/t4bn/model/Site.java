@@ -1,15 +1,11 @@
 package com.mattcx.t4bn.model;
 
 import java.sql.Timestamp;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -18,23 +14,18 @@ import javax.validation.constraints.NotNull;
 public class Site {	
 
 	public Site(){}
+	public Site(Long id) { this.siteId = id; }
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long siteId;
-	  
+	private long siteId;  
 	@NotNull
 	private String siteName;
-  
-	private Timestamp crtDatetime;
-	  
+	private Timestamp crtDatetime;  
 	private Timestamp updDatetime;
 
-    @ManyToMany
-    @JoinTable(name = "site_nurse"
-    			, joinColumns = {@JoinColumn(name = "site_id", referencedColumnName = "siteid")}
-    			, inverseJoinColumns = {@JoinColumn(name = "nurse_id", referencedColumnName = "nurseid")})	
-	private Set<Nurse> nurses;	
+//	@OneToMany(mappedBy="site")
+//	private Set<Sitenurse> Sitenurses;			
 	
 	public long getSiteId() { return siteId; }
 	public void setSiteId(long siteId) { this.siteId = siteId; }
@@ -48,8 +39,8 @@ public class Site {
 	public Timestamp getUpdDatetime() { return updDatetime; }
 	public void setUpdDatetime(Timestamp updDatetime) { this.updDatetime = updDatetime; }
 	
-    public Set<Nurse> getNurses() { return nurses; }
-    public void setNurses(Set<Nurse> nurses) { this.nurses = nurses; }	
+//	public Set<Sitenurse> getSitenurses() { return Sitenurses; }
+//	public void setSitenurses(Set<Sitenurse> sitenurses) { Sitenurses = sitenurses; }		
 	
     @Override
 	public String toString() {

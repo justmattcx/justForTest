@@ -1,16 +1,12 @@
 package com.mattcx.t4bn.model;
 
 import java.sql.Timestamp;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 
 import javax.validation.constraints.NotNull;
 
@@ -20,33 +16,23 @@ public class Nurse {
 
 	public Nurse() { }
 
-	public Nurse(long id) { this.nurseId = id; }
-	public Nurse(String nurseNo) { this.nurseNo = nurseNo; }
+	public Nurse(Long id) { this.nurseId = id; }
 	  
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long nurseId;
-	  
+	private Long nurseId;
 	@NotNull
 	private String nurseNo;
-	  
 	@NotNull
 	private String nurseName;
-
-	private Timestamp crtDatetime;
-	  
+	private Timestamp crtDatetime;	  
 	private Timestamp updDatetime;
 	   
-    //@ManyToMany(cascade = CascadeType.ALL)
-	//@ManyToMany(cascade = CascadeType.PERSIST)
-	@ManyToMany
-    @JoinTable(name = "site_nurse"
-    			, joinColumns = {@JoinColumn(name = "nurse_id", referencedColumnName = "nurseid")}
-    			, inverseJoinColumns = {@JoinColumn(name = "site_id", referencedColumnName = "siteid")})
-    private Set<Site> sites;	
-	
-	public long getNurseId() { return nurseId; }
-	public void setNurseId(long value) { this.nurseId = value; }
+//    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "nurse")
+//	private Set<Sitenurse> Sitenurses;			
+
+	public Long getNurseId() { return nurseId; }
+	public void setNurseId(Long value) { this.nurseId = value; }
 
 	public String getNurseNo() { return nurseNo; }
 	public void setNurseNo(String value) { this.nurseNo = value; }
@@ -60,8 +46,8 @@ public class Nurse {
 	public Timestamp getUpdDatetime() { return updDatetime; }
 	public void setUpdDatetime(Timestamp value) { this.updDatetime = value; }  
 	
-    public Set<Site> getSites() { return sites; }	
-    public void setSites(Set<Site> sites) { this.sites = sites; }    
+//	public Set<Sitenurse> getSitenurses() { return Sitenurses; }
+//	public void setSitenurses(Set<Sitenurse> sitenurses) { Sitenurses = sitenurses; }		
 	
 	@Override
 	public String toString() {

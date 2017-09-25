@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.mattcx.t4bn.common.Common" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="<%=request.getContextPath()%>" />
 <!DOCTYPE html>
@@ -47,13 +48,15 @@
 				<thead><tr>
 					<th>員工編號</th>
 					<th>護士姓名</th>
+					<th>加入時間</th>
 				</tr></thead>
 				<tbody>
 				
-				<c:forEach var="nurse" items="${nurseList}">
+				<c:forEach var="showSitenurse" items="${showSitenurseList}">
 					<tr class="text-info">
-						<td>${nurse.nurseNo} </td>
-						<td>${nurse.nurseName} </td>					
+						<td>${showSitenurse.nurseNo} </td>
+						<td>${showSitenurse.nurseName} </td>
+						<td>${Common.timestampFormat(showSitenurse.crtDatetime,"yyyy/MM/dd HH:mm:ss")} </td>					
 					</tr>	
 				</c:forEach>
 		

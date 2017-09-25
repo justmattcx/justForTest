@@ -7,7 +7,15 @@
 
 > mysql 5.6.21 / MariaDB 10.1.26
 
-##### 開發框架(後端)：
+##### 開發框架(前端)
+> jquery 3.2.1
+
+> bootstrap 3.3.7
+
+##### 開發工具
+> maven 4.0.0
+
+##### 開發框架(後端)
 > spring boot 1.5.4
 
 >> spring framework 4.3.9
@@ -21,8 +29,3 @@
 >> slf4j 1.7.25
 
 >> logback 1.1.11
-
-##### 開發框架(前端)：
-> jquery 3.2.1
-
-> bootstrap 3.3.7
