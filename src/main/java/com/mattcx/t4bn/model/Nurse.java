@@ -28,7 +28,7 @@ public class Nurse {
 	private Timestamp crtDatetime;	  
 	private Timestamp updDatetime;
 	   
-//    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "nurse")
+//  @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "nurse")
 //	private Set<Sitenurse> Sitenurses;			
 
 	public Long getNurseId() { return nurseId; }
@@ -46,13 +46,9 @@ public class Nurse {
 	public Timestamp getUpdDatetime() { return updDatetime; }
 	public void setUpdDatetime(Timestamp value) { this.updDatetime = value; }  
 	
-//	public Set<Sitenurse> getSitenurses() { return Sitenurses; }
-//	public void setSitenurses(Set<Sitenurse> sitenurses) { Sitenurses = sitenurses; }		
-	
 	@Override
 	public String toString() {
 		return "Nurse [nurseId=" + nurseId + ", nurseNo=" + nurseNo + ", nurseName=" + nurseName + ", crtDatetime="
 				+ crtDatetime + ", updDatetime=" + updDatetime + "]";
-	}    
-	
+	}    	
 }

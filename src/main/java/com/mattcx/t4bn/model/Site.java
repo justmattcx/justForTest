@@ -39,13 +39,9 @@ public class Site {
 	public Timestamp getUpdDatetime() { return updDatetime; }
 	public void setUpdDatetime(Timestamp updDatetime) { this.updDatetime = updDatetime; }
 	
-//	public Set<Sitenurse> getSitenurses() { return Sitenurses; }
-//	public void setSitenurses(Set<Sitenurse> sitenurses) { Sitenurses = sitenurses; }		
-	
     @Override
 	public String toString() {
 		return "Site [siteId=" + siteId + ", siteName=" + siteName + ", crtDatetime=" + crtDatetime + ", updDatetime="
 				+ updDatetime + "]";
-	}    
-  
+	}      
 }

@@ -1,13 +1,10 @@
 package com.mattcx.t4bn.controller;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import org.apache.jasper.tagplugins.jstl.core.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mattcx.t4bn.dao.NurseDao;
-import com.mattcx.t4bn.dao.SiteDao;
-import com.mattcx.t4bn.dao.SitenurseDao;
-import com.mattcx.t4bn.model.Nurse;
 import com.mattcx.t4bn.model.Site;
 import com.mattcx.t4bn.model.Sitenurse;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
+import com.mattcx.t4bn.service.SiteService;
 
 @RestController
 @RequestMapping("/site")
@@ -32,13 +24,9 @@ public class SiteController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-    @Autowired
-    private SiteDao siteDao;
-    @Autowired
-    private NurseDao nurseDao; 
-    @Autowired
-    private SitenurseDao sitenurseDao;    
-    
+	@Autowired
+	SiteService siteService;
+
 	/** 
      * 頁面-新增站點頁
      * --
@@ -60,18 +48,10 @@ public class SiteController {
     @RequestMapping(value = "/doAdd", method = RequestMethod.POST)
     public ModelAndView doAdd(HttpServletRequest req, HttpServletResponse resp) {        
     	logger.debug("doAdd");
-
     	String siteName = req.getParameter("siteName");
-    	logger.trace("siteName=", siteName);
-    	try {
-        	Site site = new Site();
-        	site.setSiteName(siteName);
-        	site.setCrtDatetime(new Timestamp(System.currentTimeMillis()));
-        	site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));
-    		siteDao.save(site);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}    	
+    	logger.trace("siteName="+siteName);
+
+    	siteService.doAddSite(siteName);
         return new ModelAndView("redirect:/site");
     }  	
 	
@@ -83,9 +63,8 @@ public class SiteController {
     @RequestMapping("")
     public ModelAndView siteListPage(){
     	logger.debug("siteListPage");
+    	List<Site> siteList = siteService.findAll();
     	
-    	List<Site> siteList = (List<Site>)siteDao.findAll();
-    	logger.trace("siteList: {}", siteList);
         ModelAndView modelAndView = new ModelAndView("/site_list");
         modelAndView.addObject("siteList", siteList);
         return modelAndView;
@@ -102,26 +81,14 @@ public class SiteController {
     	logger.trace("siteId="+siteId);
     	
     	ModelAndView modelAndView = new ModelAndView("/site_edit");
+    	modelAndView.addObject("siteId",siteId);
     	
-    	Site site = siteDao.findOne(new Long(siteId));
-    	logger.trace("site="+site.toString());        
-        modelAndView.addObject("siteId",siteId);
+    	Site site = siteService.findOne(new Long(siteId));
         modelAndView.addObject("site", site);
    
-        List<Sitenurse> sitenurseList = sitenurseDao.findBySiteId(new Long(siteId));
-        List<Sitenurse> showSitenurseList = new ArrayList<Sitenurse>();
-        
-        logger.trace("sitenurseList: {}", sitenurseList.toString());
-        // List<Nurse> nurseList = new ArrayList<Nurse>();
-        for(Sitenurse sitenurse : sitenurseList){        	
-        	Nurse n = nurseDao.findOne(sitenurse.getNurseId());
-        	sitenurse.setNurseNo(n.getNurseNo());
-        	sitenurse.setNurseName(n.getNurseName());
-        	showSitenurseList.add(sitenurse);
-        }       
+        List<Sitenurse> showSitenurseList = siteService.findSiteNurseListBySiteId(new Long(siteId));
         modelAndView.addObject("showSitenurseList", showSitenurseList);
-        logger.trace("showSitenurseList: {}", showSitenurseList);
- 
+        
         return modelAndView;
     }	    
     
@@ -139,11 +106,7 @@ public class SiteController {
     	logger.trace("siteId="+siteId);    
     	logger.trace("siteName="+siteName);    
     	
-    	Site site = siteDao.findOne(new Long(siteId));
-    	site.setSiteName(siteName);
-    	site.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
-    	siteDao.save(site);
-    	
+    	siteService.editSite(new Long(siteId), siteName);
         return new ModelAndView("redirect:/site");
     } 
     
@@ -157,12 +120,7 @@ public class SiteController {
     	logger.debug("doDel");
     	logger.trace("siteId="+siteId);  
     	
-    	List<Sitenurse> doDelSitenurses = sitenurseDao.findBySiteId((Long.parseLong(siteId, 10)));
-    	sitenurseDao.delete(doDelSitenurses);    	
-    	
-    	Site site = siteDao.findOne(Long.parseLong(siteId, 10));
-    	siteDao.delete(site);    	
-    	
+    	siteService.deleteSiteInfo(Long.parseLong(siteId, 10));
         return new ModelAndView("redirect:/site");
     }       
     

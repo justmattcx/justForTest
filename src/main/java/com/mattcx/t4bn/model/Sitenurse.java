@@ -31,7 +31,6 @@ public class Sitenurse {
 	@Transient 
 	private String nurseName;
 	 
-	 
 //	@ManyToOne
 //	private Site site;
 //	@ManyToOne
@@ -54,11 +53,4 @@ public class Sitenurse {
 	
 	public String getNurseName() { return nurseName; }
 	public void setNurseName(String nurseName) { this.nurseName = nurseName; }	
-	
-//	public Site getSite() { return site; }
-//	public void setSite(Site site) { this.site = site; }
-//
-//	public Nurse getNurse() { return nurse; }
-//	public void setNurse(Nurse nurse) { this.nurse = nurse; }
-
 }
