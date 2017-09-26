@@ -60,7 +60,11 @@ public class NurseController {
     	logger.trace("nurseName="+nurseName);
     	
     	String to[] = req.getParameterValues("to");
-    	logger.trace("to[]: {}", Arrays.asList(to));
+    	if(null!=to && to.length>0) {
+    		logger.trace("to[]: {}", Arrays.asList(to));
+    	} else {
+    		logger.trace("to[] isEmpty");
+    	}
     
     	nurseService.doAddNurse(nurseNo, nurseName, to);
     	
@@ -127,10 +131,19 @@ public class NurseController {
     	logger.trace("nurseName="+nurseName);
     	
     	String to[] = req.getParameterValues("to");
-    	logger.trace("to[]: {}", Arrays.asList(to));   	
+    	logger.trace("1-1");
+    	if(null!=to && to.length>0) {
+    		logger.trace("to[]: {}", Arrays.asList(to));   	
+    	}
+    	
+    	
+    	
+    	logger.trace("1-2");
     	
     	// 儲存護士主擋(修改)+儲存護士註冊站點檔(新增+刪除)
     	nurseService.saveNurseInfo(new Long(nurseId), nurseNo, nurseName, to);
+    	logger.trace("1-3");
+    	
         return new ModelAndView("redirect:/nurse");
     } 
     

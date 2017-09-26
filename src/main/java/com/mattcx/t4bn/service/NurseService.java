@@ -147,7 +147,7 @@ public class NurseService {
      *  
      * */
 	public void saveNurseInfo(Long nurseId, String nurseNo, String nurseName, String[] to) {
-		
+				
     	// 儲存護士主擋
     	Nurse updNurse = nurseDao.findOne(nurseId);
     	updNurse.setNurseNo(nurseNo);
@@ -155,7 +155,7 @@ public class NurseService {
     	updNurse.setUpdDatetime(new Timestamp(System.currentTimeMillis()));    	
     	//nurse.setSites(siteSet);
     	nurseDao.save(updNurse);
-
+    	
     	/* 儲存站點護士註冊中間表 */
     	// 1. 取得該名護士 現有註冊表
         List<Sitenurse> sitenurseList = sitenurseDao.findByNurseId(updNurse.getNurseId());
@@ -163,11 +163,14 @@ public class NurseService {
         List<String> nowSiteIds = new ArrayList<String>();
         sitenurseList.forEach(i -> nowSiteIds.add(i.getSiteId().toString()));
         logger.trace("1. 取得該名護士 現有註冊表=>nowSiteIds: {}", nowSiteIds);
-        
+                
     	// 2. 取得該名護士目前選取的註冊表站點id
-        List<String> newSiteIds = Arrays.asList(to);
+        List<String> newSiteIds = new ArrayList<String>();
+        if(null!=to && to.length>0) {
+        	newSiteIds = Arrays.asList(to);
+        }
         logger.trace("2. 取得該名護士目前選取的註冊表站點id=>newSiteIds: {}", newSiteIds);
-        
+                
         // 3. 新增 取得該名護士 需要 新增註冊站點id
         List<String> doAddList = new ArrayList<String>();
         Set<Sitenurse> doAddSet = new HashSet<Sitenurse>();
@@ -183,22 +186,33 @@ public class NurseService {
         });
         if(null!=doAddSet && !doAddSet.isEmpty()) {
         	sitenurseDao.save(doAddSet);
-        }
+        } 
         logger.trace("3. 新增 取得該名護士 需要 新增註冊站點id=>doAddSiteIds: {}", doAddList);
         
         // 4. 刪除 取得該名護士 需要刪除註冊站點id
         List<String> doDelList = new ArrayList<String>();
         Set<Sitenurse> doDelSet = new HashSet<Sitenurse>();
-        nowSiteIds.forEach(i->{
-            if (!newSiteIds.contains(i)) { 
-            	doDelList.add(i); 
-            	Sitenurse delsn = sitenurseDao.findBySiteIdNurseId(new Long(i), nurseId);
+        
+        for(String id: nowSiteIds) {
+            if ( !newSiteIds.contains(id)) { 
+            	doDelList.add(id); 
+            	Sitenurse delsn = sitenurseDao.findBySiteIdNurseId(new Long(id), nurseId);
             	doDelSet.add(delsn);
-            }
-        });       
+            }       	
+        }        
+//        nowSiteIds.forEach(i->{
+//            if ( !newSiteIds.contains(i)) { 
+//            	doDelList.add(i); 
+//            	Sitenurse delsn = sitenurseDao.findBySiteIdNurseId(new Long(i), nurseId);
+//            	doDelSet.add(delsn);
+//            	logger.trace("2-7");
+//            }
+//        });       
+                
         if(null!=doDelSet && !doDelSet.isEmpty()) {
         	sitenurseDao.delete(doDelSet);
         }
+        
         logger.trace("4. 刪除 取得該名護士 需要刪除註冊站點id=>doDelList: {}", doDelList);		
 	}
 
